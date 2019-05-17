@@ -1,89 +1,110 @@
 import React from 'react';
 import {
-  Image,
-  Platform,
-  ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
+  TextInput,
   View,
-  Dimensions, 
-  Animated, 
-  PanResponder
+  Switch
 } from 'react-native';
-import { WebBrowser } from 'expo';
-
-const SCREEN_HEIGHT = Dimensions.get('window').height;
-const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default class SettingsScreen extends React.Component {
   constructor() {
     super()
-    this.position = new Animated.ValueXY()
     this.state = {
-      currentIndex: 0
+      ageMin: 0,
+      ageMax: 100,
+      isCat: false,
+      profile: 'I love all animals! I live in a nice big house on an acre of land, the pets will have plenty of room to run around and have fun. I work from home too so I will always be available to them. I grew up on a farm and have a great deal of experience working with animals.'
     }
   }
 
-  renderAnimals = () => {
-    return null
-  }
-
-  componentWillMount() {
-    this.PanResponder = PanResponder.create({
-      onStartShouldSetPanResponder: (evt, gestureState) => true,
-      onPanResponderMove: (evt, gestureState) => {
-        this.position.setValue({ x: gestureState.dx, y: gestureState.dy })
-      },
-      onPanResponderRelease: (evt, gestureState) => {
-
-      }
-    })
-  }
-
   render() {
+
+    changeAnimal = (animal) => {
+      this.setState({isCat: !this.state.isCat})
+      console.log('Animal:', this.state.isCat)
+    }
+
     return (
       <View style={styles.content}>
         <Text style={styles.header}>Adopter Profile</Text>
         <View style={styles.description}>
-          <Text>profile info from dog</Text>
+          <Text style={{fontSize: 18}}>{this.state.profile}</Text>
         </View>
+        <Text>{this.state.ageMin}, {this.state.ageMax}</Text>
         <Text style={styles.header}>Preferences</Text>
-        <View style={styles.preferences}></View>
+        <View style={styles.preferences}>
+          <View style={styles.animal}>
+            <Text style={{fontSize: 20}}>Animal:</Text>
+            <Text style={{fontSize: 20}}>Cat</Text>
+            <Switch
+              trackColor={{false: 'red', true: 'blue'}}
+              ios_backgroundColor={'red'}
+              onValueChange={changeAnimal}
+              value={this.state.isCat}
+              style={{transform: [{ scaleX: 2 }, { scaleY: 1.5 }]}}
+            />
+            <Text style={{fontSize: 20}}>Dog</Text>
+          </View>
+          <View style={styles.age}>
+            <Text style={{fontSize: 20, marginRight: 50}}>Age:</Text>
+            <TextInput
+              style={styles.field}
+              placeholder="Min"
+              onChangeText={(ageMin) => this.setState({ageMin})}
+            />
+            <TextInput
+              style={styles.field}
+              placeholder="Max"
+              onChangeText={(ageMax) => this.setState({ageMax})}
+            />
+          </View>
+        </View>
       </View>
     );
   }
-
-  _handleLearnMorePress = () => {
-    WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
-  };
-
-  _handleHelpPress = () => {
-    WebBrowser.openBrowserAsync(
-      'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
-    );
-  };
 }
 
 const styles = StyleSheet.create({
   content: {
     flex: 1,
-    margin: 15
+    padding: 15,
+    backgroundColor: 'lightgray',
   },
   header: {
     fontSize: 24,
     marginBottom: 5
   },
   description: {
-    borderStyle: 'solid',
     borderColor: 'black',
     borderWidth: 1,
     height: '50%',
     padding: 10,
-    marginBottom: 20
+    marginBottom: 20,
   },
   preferences: {
-
-  }
-
+    flex: 1,
+  },
+  animal: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  age: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  field: {
+    width: 100,
+    height: 50,
+    paddingLeft: 30,
+    paddingRight: 10,
+    lineHeight: 24,
+    fontSize: 24,
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 10
+  },
 });

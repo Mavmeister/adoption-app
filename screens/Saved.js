@@ -4,12 +4,8 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  Text,
-  TouchableOpacity,
   View,
-  Dimensions, 
-  Animated, 
-  PanResponder
+
 } from 'react-native';
 
 // Sample data for dev

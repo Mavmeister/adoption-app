@@ -57,5 +57,5 @@ export default createBottomTabNavigator({
   SettingsStack,
 }, {
   // for dev
-  initialRouteName: 'SavedStack'
+  initialRouteName: 'SettingsStack'
 });
