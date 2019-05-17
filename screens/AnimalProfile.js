@@ -19,7 +19,6 @@ export default class AnimalProfile extends React.Component {
           <View style={{marginTop: 22}}>
             <View>
               <Text>{this.props.id}</Text>
-
               <TouchableHighlight
                 onPress={this.props.onClose}>
                 <Text>Hide Modal</Text>
