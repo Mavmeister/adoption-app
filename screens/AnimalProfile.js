@@ -1,66 +1,34 @@
 import React from 'react';
 import {
   Image,
-  Platform,
-  ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
-  Dimensions, 
-  Animated, 
-  PanResponder
+  TouchableHighlight,
+  Modal
 } from 'react-native';
-import { WebBrowser } from 'expo';
 
-const SCREEN_HEIGHT = Dimensions.get('window').height;
-const SCREEN_WIDTH = Dimensions.get('window').width;
-
-export default class HomeScreen extends React.Component {
-  constructor() {
-    super()
-    this.position = new Animated.ValueXY()
-    this.state = {
-      currentIndex: 0
-    }
-  }
-
-  renderAnimals = () => {
-    return null
-  }
-
-  componentWillMount() {
-    this.PanResponder = PanResponder.create({
-      onStartShouldSetPanResponder: (evt, gestureState) => true,
-      onPanResponderMove: (evt, gestureState) => {
-        this.position.setValue({ x: gestureState.dx, y: gestureState.dy })
-      },
-      onPanResponderRelease: (evt, gestureState) => {
-
-      }
-    })
-  }
+export default class AnimalProfile extends React.Component {
 
   render() {
     return (
-      <View style={styles.content}>
-        <Animated.View style={[{transform: this.position.getTranslateTransform()}, styles.animated]}
-        {...this.PanResponder.panHandlers}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.props.visible}>
+          <View style={{marginTop: 22}}>
+            <View>
+              <Text>{this.props.id}</Text>
 
-        </Animated.View>
-      </View>
+              <TouchableHighlight
+                onPress={this.props.onClose}>
+                <Text>Hide Modal</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
     );
   }
-
-  _handleLearnMorePress = () => {
-    WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
-  };
-
-  _handleHelpPress = () => {
-    WebBrowser.openBrowserAsync(
-      'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
-    );
-  };
 }
 
 const styles = StyleSheet.create({
@@ -68,8 +36,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   animated: {
-    height: SCREEN_HEIGHT - 120,
-    width: SCREEN_WIDTH,
     padding: 10,
     backgroundColor: 'red',
     borderStyle: 'solid',

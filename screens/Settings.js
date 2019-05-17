@@ -4,7 +4,8 @@ import {
   Text,
   TextInput,
   View,
-  Switch
+  Switch,
+  Keyboard
 } from 'react-native';
 
 export default class SettingsScreen extends React.Component {
@@ -29,7 +30,15 @@ export default class SettingsScreen extends React.Component {
       <View style={styles.content}>
         <Text style={styles.header}>Adopter Profile</Text>
         <View style={styles.description}>
-          <Text style={{fontSize: 18}}>{this.state.profile}</Text>
+          <TextInput 
+            onSubmitEditing={Keyboard.dismiss}
+            returnKeyType="done"
+            multiline={true}
+            style={{fontSize: 18}}
+            editable={true}
+            maxLength={1000}
+            defaultValue={this.state.profile}
+          />
         </View>
         <Text>{this.state.ageMin}, {this.state.ageMax}</Text>
         <Text style={styles.header}>Preferences</Text>
@@ -49,13 +58,22 @@ export default class SettingsScreen extends React.Component {
           <View style={styles.age}>
             <Text style={{fontSize: 20, marginRight: 50}}>Age:</Text>
             <TextInput
+              textAlign={'center'}
+              returnKeyType="done"
+              keyboardType={"number-pad"}
               style={styles.field}
               placeholder="Min"
+              maxLength={2}
               onChangeText={(ageMin) => this.setState({ageMin})}
-            />
+            /> 
+            <Text>-</Text>
             <TextInput
+              textAlign={'center'}
+              returnKeyType="done"
+              keyboardType={"number-pad"}
               style={styles.field}
               placeholder="Max"
+              maxLength={2}
               onChangeText={(ageMax) => this.setState({ageMax})}
             />
           </View>
@@ -99,8 +117,6 @@ const styles = StyleSheet.create({
   field: {
     width: 100,
     height: 50,
-    paddingLeft: 30,
-    paddingRight: 10,
     lineHeight: 24,
     fontSize: 24,
     borderWidth: 1,
