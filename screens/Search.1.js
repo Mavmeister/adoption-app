@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import AnimalProfile from './AnimalProfile.1'
 import data from '../data.json';
-import CardStack, { Card } from 'react-native-card-stack-swiper';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -96,25 +95,43 @@ export default class SearchScreen extends React.Component {
   
   renderAnimals = () => {
     return data.map((item, idx) => {
-      return <Card key={idx}><AnimalProfile {...item} /></Card>
-    })
+      if (idx < this.state.currentIndex){
+        return null;
+      } else if (idx == this.state.currentIndex){
+        return (
+          <Animated.View 
+            {...this.PanResponder.panHandlers}
+            style={[this.rotateAndTranslate, styles.animated]}
+            key={item.id}
+          >
+            <Animated.View style={[{opacity: this.saveOpacity}, styles.savedView]}>
+              <Text style={styles.save}>Save</Text>
+            </Animated.View>
+            <Animated.View style={[{opacity: this.passOpacity}, styles.passedView]}>
+              <Text style={styles.pass}>Pass</Text>
+            </Animated.View>
+            <AnimalProfile {...item}/>
+          </Animated.View>
+        )
+      } else {
+        return (
+          <Animated.View
+            style={[{
+              opacity: this.nextCardOpacity, 
+              transform: [{scale: this.nextCardScale}]},
+              styles.animated
+            ]}
+            key={item.id}>
+            <AnimalProfile {...item}/>
+          </Animated.View>
+        )
+      }
+  }).reverse()
 }
   render() {
     return (
       <View style={styles.content}>
-        <CardStack 
-          style={styles.content} 
-          ref={swiper => { this.swiper = swiper }}
-          disableTopSwipe={true}
-          disableBottomSwipe={true}
-          verticalSwipe={false}
-          renderNoMoreCards={() => 
-            <View style={styles.noCards}>
-              <Text style={{fontSize: 20}}>Sorry, no more pets available!</Text>
-            </View>}
-        >
-          {this.renderAnimals()}
-        </CardStack>
+        {this.renderAnimals()}
       </View>
     );
   }
@@ -123,15 +140,6 @@ export default class SearchScreen extends React.Component {
 const styles = StyleSheet.create({
   content: {
     flex: 1,
-  },
-  noCards: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 'auto',
-    height: 100,
-    width: 'auto',
-    backgroundColor: '#FFFF'
   },
   image: {
     flex: 1,

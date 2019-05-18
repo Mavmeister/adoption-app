@@ -25,7 +25,6 @@ export default class SettingsScreen extends React.Component {
 
     changeAnimal = () => {
       this.setState({isCat: !this.state.isCat})
-      console.log('Animal:', this.state.isCat)
     }
 
     return (
@@ -42,7 +41,6 @@ export default class SettingsScreen extends React.Component {
               defaultValue={this.state.profile}
               />
           </View>
-          <Text>{this.state.ageMin}, {this.state.ageMax}</Text>
           <Text style={styles.header}>Preferences</Text>
           <View style={styles.preferences}>
             <View style={styles.animal}>
@@ -82,7 +80,6 @@ export default class SettingsScreen extends React.Component {
           </View>
         </View>
       </TouchableWithoutFeedback>
-
     );
   }
 }
@@ -91,18 +88,21 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     padding: 15,
-    backgroundColor: 'lightgray',
+    backgroundColor: '#FFF',
   },
   header: {
     fontSize: 24,
-    marginBottom: 5
+    marginBottom: 5,
+    fontFamily: 'Open-Sans-Regular'
   },
   description: {
-    borderColor: 'black',
+    borderColor: 'lightgray',
+    borderRadius: 5,
     borderWidth: 1,
     height: '50%',
     padding: 10,
     marginBottom: 20,
+    fontFamily: 'Open-Sans-Light'
   },
   preferences: {
     flex: 1,
@@ -111,12 +111,16 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    fontFamily: 'Open-Sans-Light'
+
   },
   age: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    fontFamily: 'Open-Sans-Light'
+
   },
   field: {
     width: 100,
@@ -125,6 +129,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     borderWidth: 1,
     borderColor: 'gray',
-    borderRadius: 10
+    borderRadius: 10,
   },
 });

@@ -35,26 +35,33 @@ const styles = StyleSheet.create({
     padding: 5,
     margin: 5,
     borderWidth: 1,
-    borderColor: 'gray'
+    borderColor: 'gray',
+    borderRadius: 5
+
   },
   textContainer: {
     flex: 1,
     marginLeft: 20,
     marginBottom: 5,
     marginTop: 5,
+    paddingTop: 5,
+    paddingBottom: 5,
     justifyContent: 'space-between'
   },
   image: {
     flex: 1,
     height: 100,
     width: 100,
+    borderRadius: 5
   },
   title: {
     fontSize: 24,
-    lineHeight: 24
+    lineHeight: 24,
+    fontFamily: 'Open-Sans-Regular'
   },
   description: {
     fontSize: 16,
     lineHeight: 20,
+    fontFamily: 'Open-Sans-Light'
   }
 })
