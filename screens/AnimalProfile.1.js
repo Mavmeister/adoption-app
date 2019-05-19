@@ -6,13 +6,14 @@ import {
   View,
   ScrollView,
   TouchableHighlight,
-  Modal
+  Modal,
+  Button
 } from 'react-native';
 import window from '../constants/Layout';
 export default class AnimalProfile extends React.Component {
 
   render() {
-    const { name, img, sex, age, profile } = this.props;
+    const { name, img, sex, age, profile, isModal } = this.props;
     return (
       <View style={styles.content}>
         <View style={styles.imageContainer}>
@@ -26,6 +27,16 @@ export default class AnimalProfile extends React.Component {
             <Text style={styles.profile}>{profile}</Text>
           </View>
         </ScrollView>
+        {isModal && (
+          <View style={styles.buttonContainer}>
+            <Button
+              onPress={this.props.onClose}
+              title="Close Profile"
+              color="black"
+            >
+            </Button>
+          </View>
+        )}
       </View>
     );
   }
@@ -37,7 +48,17 @@ const styles = StyleSheet.create({
     padding: 10,
     height: window.window.height + 100,
     width: window.window.width,
-    backgroundColor: '#FFF'
+    backgroundColor: '#abe0e8',
+  },
+  buttonContainer: {
+    marginBottom: 80,
+    height: 40,
+    width: 200,
+    justifyContent: 'center',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    borderWidth: 1,
+    borderRadius: 5,
   },
   imageContainer: {
     alignItems:'center',
@@ -53,7 +74,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     lineHeight: 30,
     marginTop: 0,
-    marginBottom: 10
+    marginBottom: 5,
   },
   profile: {
     lineHeight: 24,

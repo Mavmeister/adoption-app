@@ -36,7 +36,8 @@ const styles = StyleSheet.create({
     margin: 5,
     borderWidth: 1,
     borderColor: 'gray',
-    borderRadius: 5
+    borderRadius: 5,
+    backgroundColor: '#FFF'
 
   },
   textContainer: {

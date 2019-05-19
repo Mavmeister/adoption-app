@@ -5,15 +5,16 @@ import {
   ScrollView,
   StyleSheet,
   View,
-
+  Modal
 } from 'react-native';
 
 // Sample data for dev
 import data from '../data.json';
 import SavedList from '../components/SavedList';
-import AnimalProfile from '../screens/AnimalProfile';
+import AnimalProfile from '../screens/AnimalProfile.1';
+import { connect } from 'react-redux';
 
-export default class SavedScreen extends React.Component {
+class SavedScreen extends React.Component {
   state = {
     modalVisible: false,
     animalId: null,
@@ -24,13 +25,23 @@ export default class SavedScreen extends React.Component {
   }
 
   render() {
+    const singleAnimal = this.props.savedAnimals.find(animal => animal.id === this.state.animalId)
     return (
       <View style={styles.content}>
-        <SavedList data={data} onPressItem={(id) => this.setState({animalId: id, modalVisible: true})}/>
-        <AnimalProfile 
-          visible={this.state.modalVisible} 
-          id={this.state.animalId} 
-          onClose={this.setModalVisible}/>
+        <SavedList data={this.props.savedAnimals} onPressItem={(id) => this.setState({animalId: id, modalVisible: true})}/>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+        >
+          <AnimalProfile 
+            isModal={true}
+            visible={true}
+            id={this.state.animalId}
+            onClose={this.setModalVisible}
+            {...singleAnimal}
+          />
+        </Modal>
       </View>
     );
   }
@@ -39,5 +50,16 @@ export default class SavedScreen extends React.Component {
 const styles = StyleSheet.create({
   content: {
     flex: 1,
+    backgroundColor: '#ffcd99'
   },
 });
+
+const mapDispatchToProps = {
+
+};
+
+const mapStateToProps = (state) => ({
+  savedAnimals: state.data.savedAnimals,
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SavedScreen)

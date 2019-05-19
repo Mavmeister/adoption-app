@@ -12,7 +12,7 @@ import {
   PanResponder
 } from 'react-native';
 import AnimalProfile from './AnimalProfile.1'
-import { fetchAnimals, fetchSettings } from '../actions';
+import { fetchAnimals, fetchSettings, saveAnimals } from '../actions';
 import { connect } from 'react-redux';
 import CardStack, { Card } from 'react-native-card-stack-swiper';
 
@@ -45,15 +45,24 @@ class SearchScreen extends React.Component {
     this.props.fetchSettings()
   }
   
-  renderAnimals = (animals, typePreference) => {
-    const filtered = animals.filter(animal => animal.type === typePreference)
-    return filtered.map((item, idx) => {
+  renderAnimals = (animals) => {
+    // TODO: FIX ISSUE WITH DISAPPEARING ANIMALS
+    // const dogs = animals.filter(animal => animal.type === 'dog')
+    // const cats = animals.filter(animal => animal.type === 'cat')
+    // const bothAnimals = {'dogs': dogs, 'cats': cats}
+    // const filtered = animals.filter(animal => animal.type === typePreference)
+    return animals.map((item, idx) => {
       return <Card key={idx}><AnimalProfile {...item} /></Card>
     })
-}
+  }
+
+  filteredAnimals = (animals, type) => animals.filter(animal => animal.type === type)
+
   render() {
     const animals = this.props.animals;
     const { typePreference } = this.props.settings;
+    const selectedAnimals = this.filteredAnimals(animals, typePreference)
+
     return (
       <View style={styles.content}>
         <CardStack 
@@ -62,12 +71,14 @@ class SearchScreen extends React.Component {
           disableTopSwipe={true}
           disableBottomSwipe={true}
           verticalSwipe={false}
+          onSwipedRight={(idx) => this.props.saveAnimals(selectedAnimals[idx])}
+          // onSwipedLeft={(idx) => this.props.saveAnimals(animals[idx])}
           renderNoMoreCards={() => 
             <View style={styles.noCards}>
               <Text style={{fontSize: 20}}>Sorry, no more pets available!</Text>
             </View>}
         >
-          {this.renderAnimals(animals, typePreference)}
+          {this.renderAnimals(selectedAnimals)}
         </CardStack>
       </View>
     );
@@ -77,6 +88,7 @@ class SearchScreen extends React.Component {
 const styles = StyleSheet.create({
   content: {
     flex: 1,
+    backgroundColor: '#31BED2'
   },
   noCards: {
     flex: 1,
@@ -134,7 +146,8 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = {
   fetchAnimals,
-  fetchSettings
+  fetchSettings,
+  saveAnimals
 };
 
 const mapStateToProps = (state) => ({

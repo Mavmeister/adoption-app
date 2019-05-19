@@ -40,9 +40,7 @@ const fetchAnimals = (args = {}) => (dispatch) => {
       })
 }
 const saveAnimals = (args = {}) => (dispatch) => {
-  console.log("ARG", args)
-  const { animal } = args;
-    dispatch(animalsSave(animal));
+  dispatch(animalsSave(args));
 }
 
 const fetchSettings = (args = {}) => (dispatch) => {

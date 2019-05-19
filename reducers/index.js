@@ -38,7 +38,7 @@ const data = (state = initialState, action) => {
     case ANIMALS_SAVE:
       return {
         ...state,
-        savedAnimals: action.payload,
+        savedAnimals: [...state.savedAnimals, action.payload],
         loading: false
       }
     case SETTINGS_REQUEST:
