@@ -9,7 +9,7 @@ import {
   ScrollView,
   TouchableWithoutFeedback
 } from 'react-native';
-import { fetchSettings, updateSettings } from '../actions';
+import { fetchSettings, updateSettings, fetchAnimals } from '../actions';
 import { connect } from 'react-redux';
 
 class SettingsScreen extends React.Component {
@@ -33,6 +33,7 @@ class SettingsScreen extends React.Component {
     changeAnimal = (isDog) => {
       const typePreference = isDog === false ? 'cat' : 'dog';
       this.props.updateSettings({"typePreference": typePreference})
+      this.props.fetchAnimals()
     }
     changeProfile = (profile) => {
       this.props.updateSettings({"profile": profile})
@@ -154,7 +155,8 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = {
   fetchSettings,
-  updateSettings
+  updateSettings,
+  fetchAnimals
 };
 
 const mapStateToProps = (state) => ({
