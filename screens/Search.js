@@ -12,7 +12,7 @@ import {
   PanResponder
 } from 'react-native';
 import AnimalProfile from './AnimalProfile.1'
-import { fetchAnimals } from '../actions';
+import { fetchAnimals, fetchSettings } from '../actions';
 import { connect } from 'react-redux';
 import CardStack, { Card } from 'react-native-card-stack-swiper';
 
@@ -42,15 +42,18 @@ class SearchScreen extends React.Component {
 
   componentWillMount() {
     this.props.fetchAnimals()
+    this.props.fetchSettings()
   }
   
-  renderAnimals = (animals) => {
-    return animals.map((item, idx) => {
+  renderAnimals = (animals, typePreference) => {
+    const filtered = animals.filter(animal => animal.type === typePreference)
+    return filtered.map((item, idx) => {
       return <Card key={idx}><AnimalProfile {...item} /></Card>
     })
 }
   render() {
-    const { animals } = this.props.animals;
+    const animals = this.props.animals;
+    const { typePreference } = this.props.settings;
     return (
       <View style={styles.content}>
         <CardStack 
@@ -64,7 +67,7 @@ class SearchScreen extends React.Component {
               <Text style={{fontSize: 20}}>Sorry, no more pets available!</Text>
             </View>}
         >
-          {this.renderAnimals(animals)}
+          {this.renderAnimals(animals, typePreference)}
         </CardStack>
       </View>
     );
@@ -130,11 +133,13 @@ const styles = StyleSheet.create({
 });
 
 const mapDispatchToProps = {
-  fetchAnimals
+  fetchAnimals,
+  fetchSettings
 };
 
 const mapStateToProps = (state) => ({
-  animals: state.data
-});
+  animals: state.data.animals,
+  settings: state.data.settings
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchScreen)

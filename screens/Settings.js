@@ -9,8 +9,10 @@ import {
   ScrollView,
   TouchableWithoutFeedback
 } from 'react-native';
+import { fetchSettings, updateSettings } from '../actions';
+import { connect } from 'react-redux';
 
-export default class SettingsScreen extends React.Component {
+class SettingsScreen extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -21,10 +23,24 @@ export default class SettingsScreen extends React.Component {
     }
   }
 
-  render() {
+  componentWillMount() {
+    this.props.fetchSettings()
+  }
 
-    changeAnimal = () => {
-      this.setState({isCat: !this.state.isCat})
+  render() {
+    const { profile, typePreference, ageRange } = this.props.settings;
+
+    changeAnimal = (isDog) => {
+      const typePreference = isDog === false ? 'cat' : 'dog';
+      this.props.updateSettings({"typePreference": typePreference})
+    }
+    changeProfile = (profile) => {
+      this.props.updateSettings({"profile": profile})
+    }
+    changeAge = (ageRange) => {
+      console.log(ageRange)
+      const { max, min } = ageRange;
+      this.props.updateSettings({"ageRange": {"min": min, "max": max}})
     }
 
     return (
@@ -38,7 +54,8 @@ export default class SettingsScreen extends React.Component {
               style={{fontSize: 18, height: '100%'}}
               editable={true}
               maxLength={1000}
-              defaultValue={this.state.profile}
+              defaultValue={profile}
+              onChangeText={(text) => changeProfile(text)}
               />
           </View>
           <Text style={styles.header}>Preferences</Text>
@@ -50,7 +67,7 @@ export default class SettingsScreen extends React.Component {
                 trackColor={{false: 'red', true: 'blue'}}
                 ios_backgroundColor={'red'}
                 onValueChange={changeAnimal}
-                value={this.state.isCat}
+                value={typePreference == 'cat' ? false : true}
                 style={{transform: [{ scaleX: 2 }, { scaleY: 1.5 }]}}
               />
               <Text style={{fontSize: 20}}>Dog</Text>
@@ -63,8 +80,9 @@ export default class SettingsScreen extends React.Component {
                 keyboardType={"number-pad"}
                 style={styles.field}
                 placeholder="Min"
+                value={ageRange.min.toString()}
                 maxLength={2}
-                onChangeText={(ageMin) => this.setState({ageMin})}
+                onChangeText={(age) => changeAge({ageRange: {"min": age}})}
               /> 
               <Text>-</Text>
               <TextInput
@@ -73,8 +91,9 @@ export default class SettingsScreen extends React.Component {
                 keyboardType={"number-pad"}
                 style={styles.field}
                 placeholder="Max"
+                value={ageRange.max.toString()}
                 maxLength={2}
-                onChangeText={(ageMax) => this.setState({ageMax})}
+                onChangeText={(age) => changeAge({ageRange: {"max": age}})}
               />
             </View>
           </View>
@@ -132,3 +151,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 });
+
+const mapDispatchToProps = {
+  fetchSettings,
+  updateSettings
+};
+
+const mapStateToProps = (state) => ({
+  settings: state.data.settings
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsScreen)
