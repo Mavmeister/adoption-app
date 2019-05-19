@@ -12,30 +12,19 @@ import {
   PanResponder
 } from 'react-native';
 import AnimalProfile from './AnimalProfile.1'
-import data from '../data.json';
+import { fetchAnimals } from '../actions';
+import { connect } from 'react-redux';
 import CardStack, { Card } from 'react-native-card-stack-swiper';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-export default class SearchScreen extends React.Component {
+class SearchScreen extends React.Component {
   constructor() {
     super()
     this.position = new Animated.ValueXY()
     this.state = {
       currentIndex: 0
-    }
-    this.rotate = this.position.x.interpolate({
-      inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
-      outputRange: ['-10deg', '0deg', '10deg'],
-      extrapolate: 'clamp'
-    })
-
-    this.rotateAndTranslate = {
-      transform: [{
-        rotate: this.rotate
-      },
-      ...this.position.getTranslateTransform()]
     }
 
     this.saveOpacity = this.position.x.interpolate({
@@ -49,57 +38,19 @@ export default class SearchScreen extends React.Component {
       outputRange: [1, 0, 0],
       extrapolate: 'clamp'
     })
-
-    this.nextCardOpacity = this.position.x.interpolate({
-      inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
-      outputRange: [1, 0, 1],
-      extrapolate: 'clamp'
-    })
-    this.nextCardScale = this.position.x.interpolate({
-      inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
-      outputRange: [1, 0.8, 1],
-      extrapolate: 'clamp'
-    })
   }
 
-  
   componentWillMount() {
-    this.PanResponder = PanResponder.create({
-      onStartShouldSetPanResponder: (evt, gestureState) => true,
-      onPanResponderMove: (evt, gestureState) => {
-        this.position.setValue({ x: gestureState.dx, y: gestureState.dy })
-      },
-      onPanResponderRelease: (evt, gestureState) => {
-        // TODO: use case / switch
-        if (gestureState.dx > 120){
-          Animated.spring(this.position, {toValue: {x: SCREEN_WIDTH + 100, y: gestureState.dy}})
-            .start(() => {
-              // TODO new react state 
-              this.setState({currentIndex: this.state.currentIndex + 1}, () => {
-                this.position.setValue({x: 0, y: 0})
-              })
-            })
-        } else if (gestureState.dx < 120){
-          Animated.spring(this.position, {toValue: {x: - SCREEN_WIDTH - 100, y: gestureState.dy}})
-            .start(() => {
-              // TODO use new react state 
-              this.setState({currentIndex: this.state.currentIndex + 1}, () => {
-                this.position.setValue({x: 0, y: 0})
-              })
-            })
-        } else {
-          Animated.spring(this.position, {toValue: {x: 0, y: 0, friction: 4}}).start()
-        }
-      }
-    })
+    this.props.fetchAnimals()
   }
   
-  renderAnimals = () => {
-    return data.map((item, idx) => {
+  renderAnimals = (animals) => {
+    return animals.map((item, idx) => {
       return <Card key={idx}><AnimalProfile {...item} /></Card>
     })
 }
   render() {
+    const { animals } = this.props.animals;
     return (
       <View style={styles.content}>
         <CardStack 
@@ -113,7 +64,7 @@ export default class SearchScreen extends React.Component {
               <Text style={{fontSize: 20}}>Sorry, no more pets available!</Text>
             </View>}
         >
-          {this.renderAnimals()}
+          {this.renderAnimals(animals)}
         </CardStack>
       </View>
     );
@@ -177,3 +128,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
 });
+
+const mapDispatchToProps = {
+  fetchAnimals
+};
+
+const mapStateToProps = (state) => ({
+  animals: state.data
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchScreen)

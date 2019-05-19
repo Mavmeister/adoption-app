@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { AppLoading, Font, } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
+import { store } from './store';
+import { Provider } from 'react-redux'
 
 export default class App extends React.Component {
   state = {
@@ -20,7 +22,9 @@ export default class App extends React.Component {
     } else {
       return (
         <View style={styles.container}>
-          <AppNavigator />
+          <Provider store={store}>
+            <AppNavigator />
+          </Provider>
         </View>
       );
     }
