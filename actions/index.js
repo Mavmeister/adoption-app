@@ -31,26 +31,22 @@ const settingsUpdate = value => ({
   payload: value,
 });
 
-const fetchAnimals = (args = {}) => (dispatch) => {
+const fetchAnimals = () => (dispatch) => {
     dispatch(animalsRequest());
     return fetch(URLs.animals)
       .then(res => res.json())
-      .then(json => {
-        const cats = 
-        dispatch(animalsOk(json))
-      })
+      .then(json => dispatch(animalsOk(json)))
 }
+
 const saveAnimals = (args = {}) => (dispatch) => {
   dispatch(animalsSave(args));
 }
 
-const fetchSettings = (args = {}) => (dispatch) => {
+const fetchSettings = () => (dispatch) => {
     dispatch(settingsRequest());
     return fetch(URLs.settings)
       .then(res => res.json())
-      .then(json => {
-        dispatch(settingsOk(json))
-      })
+      .then(json => dispatch(settingsOk(json)))
 }
 
 const updateSettings = (args = {}) => (dispatch, getState) => {

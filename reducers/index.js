@@ -8,6 +8,7 @@ import {
   SETTINGS_OK
 } from '../actions'
 
+// Exporting this for testing purposes
 export const initialState = {
   animals: [],
   savedAnimals: [],
@@ -45,7 +46,7 @@ const data = (state = initialState, action) => {
     case SETTINGS_REQUEST:
       return {
         ...state,
-        loading: false
+        loading: true
       }
     case SETTINGS_OK:
       return {

@@ -37,6 +37,15 @@ yarn test
 - Form validation in Settings
 - Add functionality for viewing both types of animals (cat & dog)
 - Load all images in Saved when adding to Saved array for performance
+- Push view up when keyboard is visible
 
 ## Known issues
 - If changing animal preference after swiping, some animals will appear missing
+
+### Dependencies
+Adoption app uses [React Native Card Stack Swiper](https://github.com/lhandel/react-native-card-stack-swiper) for Tinder-like swipe
+
+### URLs are located in 
+```
+/constants/URLs.js
+```

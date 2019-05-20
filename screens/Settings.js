@@ -28,7 +28,7 @@ class SettingsScreen extends React.Component {
   }
 
   render() {
-    const { profile, typePreference, ageRange } = this.props.settings;
+    const { profile, typePreference } = this.props.settings;
 
     changeAnimal = (isDog) => {
       const typePreference = isDog === false ? 'cat' : 'dog';
