@@ -43,6 +43,7 @@ class SearchScreen extends React.Component {
     return (
       <View style={styles.content}>
         <CardStack
+          outputRotationRange={['-20deg', '0deg', '20deg']}
           ref={swiper => { this.swiper = swiper }}
           disableTopSwipe={true}
           disableBottomSwipe={true}
@@ -64,15 +65,14 @@ class SearchScreen extends React.Component {
 const styles = StyleSheet.create({
   content: {
     flex: 1,
-  },
-  card: {
+    backgroundColor: Colors.orange
   },
   noCards: {
     justifyContent: 'center',
     alignItems: 'center',
     margin: 'auto',
     height: 500,
-    backgroundColor: Colors.white
+    backgroundColor: Colors.orange
   },
   savedView: {
     position: 'absolute',

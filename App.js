@@ -4,7 +4,6 @@ import { AppLoading, Font, } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 import { store } from './store';
 import { Provider } from 'react-redux';
-import Layout from './constants/Layout';
 
 export default class App extends React.Component {
   state = {
@@ -53,6 +52,5 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
   },
 });

@@ -45,7 +45,7 @@ const data = (state = initialState, action) => {
     case SETTINGS_REQUEST:
       return {
         ...state,
-        loading: true
+        loading: false
       }
     case SETTINGS_OK:
       return {
