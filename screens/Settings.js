@@ -7,7 +7,8 @@ import {
   Switch,
   Keyboard,
   ScrollView,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView
 } from 'react-native';
 import { fetchSettings, updateSettings, fetchAnimals } from '../actions';
 import { connect } from 'react-redux';
@@ -16,8 +17,10 @@ class SettingsScreen extends React.Component {
   constructor() {
     super()
     this.state = {
-      ageMin: 0,
-      ageMax: 100,
+      ageRange: {
+        min: "1",
+        max: "10"
+      },
       isCat: false,
       profile: 'I love all animals! I live in a nice big house on an acre of land, the pets will have plenty of room to run around and have fun. I work from home too so I will always be available to them. I grew up on a farm and have a great deal of experience working with animals.'
     }
@@ -32,19 +35,20 @@ class SettingsScreen extends React.Component {
 
     changeAnimal = (isDog) => {
       const typePreference = isDog === false ? 'cat' : 'dog';
-      this.props.updateSettings({"typePreference": typePreference})
+      this.props.updateSettings({typePreference})
       this.props.fetchAnimals()
     }
     changeProfile = (profile) => {
       this.props.updateSettings({"profile": profile})
     }
-    changeAge = (ageRange) => {
-      console.log(ageRange)
-      const { max, min } = ageRange;
-      this.props.updateSettings({"ageRange": {"min": min, "max": max}})
+    changeAge = (age) => {
+      this.setState({ageRange: Object.assign(this.state.ageRange, age)}, () => {
+        this.props.updateSettings({"ageRange": this.state.ageRange})
+      })
     }
 
     return (
+      
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.content}>
           <Text style={styles.header}>Adopter Profile</Text>
@@ -60,6 +64,8 @@ class SettingsScreen extends React.Component {
               />
           </View>
           <Text style={styles.header}>Preferences</Text>
+          <Text>Min:{this.state.ageRange.min}</Text>
+          <Text>Max:{this.state.ageRange.max}</Text>
           <View style={styles.preferences}>
             <View style={styles.animal}>
               <Text style={{fontSize: 20}}>Animal:</Text>
@@ -81,9 +87,9 @@ class SettingsScreen extends React.Component {
                 keyboardType={"number-pad"}
                 style={styles.field}
                 placeholder="Min"
-                value={ageRange.min.toString()}
+                value={this.state.ageRange.min}
                 maxLength={2}
-                onChangeText={(age) => changeAge({ageRange: {"min": age}})}
+                onChangeText={(age) => changeAge({"min": age})}
               /> 
               <Text>-</Text>
               <TextInput
@@ -92,9 +98,9 @@ class SettingsScreen extends React.Component {
                 keyboardType={"number-pad"}
                 style={styles.field}
                 placeholder="Max"
-                value={ageRange.max.toString()}
+                value={this.state.ageRange.max}
                 maxLength={2}
-                onChangeText={(age) => changeAge({ageRange: {"max": age}})}
+                onChangeText={(age) => changeAge({"max": age})}
               />
             </View>
           </View>

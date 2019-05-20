@@ -4,28 +4,40 @@ import {
   StyleSheet,
   Text,
   View,
+  ScrollView,
   TouchableHighlight,
-  Modal
+  Modal,
+  Button
 } from 'react-native';
-
+import window from '../constants/Layout';
 export default class AnimalProfile extends React.Component {
 
   render() {
+    const { name, img, sex, age, profile, isModal } = this.props;
     return (
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.props.visible}>
-          <View style={{marginTop: 22}}>
-            <View>
-              <Text>{this.props.id}</Text>
-              <TouchableHighlight
-                onPress={this.props.onClose}>
-                <Text>Hide Modal</Text>
-              </TouchableHighlight>
-            </View>
+      <View style={styles.content}>
+        <View style={styles.imageContainer}>
+          <Image style={styles.image} source={{uri: img}} />
+        </View>
+        <View >
+          <Text style={styles.text}>{name}, {age}yr, {sex}</Text>
+        </View>
+        <ScrollView>
+          <View style={{height: 500}}>
+            <Text style={styles.profile}>{profile}</Text>
           </View>
-        </Modal>
+        </ScrollView>
+        {isModal && (
+          <View style={styles.buttonContainer}>
+            <Button
+              onPress={this.props.onClose}
+              title="Close Profile"
+              color="black"
+            >
+            </Button>
+          </View>
+        )}
+      </View>
     );
   }
 }
@@ -33,12 +45,40 @@ export default class AnimalProfile extends React.Component {
 const styles = StyleSheet.create({
   content: {
     flex: 1,
-  },
-  animated: {
     padding: 10,
-    backgroundColor: 'red',
-    borderStyle: 'solid',
+    height: window.window.height + 100,
+    width: window.window.width,
+    backgroundColor: '#abe0e8',
+  },
+  buttonContainer: {
+    marginBottom: 80,
+    height: 40,
+    width: 200,
+    justifyContent: 'center',
+    marginLeft: 'auto',
+    marginRight: 'auto',
     borderWidth: 1,
-    borderColor: 'blue'
+    borderRadius: 5,
+  },
+  imageContainer: {
+    alignItems:'center',
+  },
+  image: {
+    height: window.window.height / 2,
+    width: window.window.width - 10,
+    // resizeMode: 'contain',
+    borderRadius: 20,
+    marginBottom: 10,
+  },
+  text: {
+    fontSize: 30,
+    lineHeight: 30,
+    marginTop: 0,
+    marginBottom: 5,
+  },
+  profile: {
+    lineHeight: 24,
+    fontSize: 20,
+    marginBottom: 25
   },
 });

@@ -16,8 +16,8 @@ const initialState = {
     profile: "",
     typePreference: "cat",
     ageRange: {
-      "min": 0,
-      "max": 20
+      "min": 9,
+      "max": 10
     }
   }
 }

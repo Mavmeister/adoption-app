@@ -11,7 +11,7 @@ import {
   Animated, 
   PanResponder
 } from 'react-native';
-import AnimalProfile from './AnimalProfile.1'
+import AnimalProfile from './AnimalProfile'
 import { fetchAnimals, fetchSettings, saveAnimals } from '../actions';
 import { connect } from 'react-redux';
 import CardStack, { Card } from 'react-native-card-stack-swiper';
@@ -56,12 +56,16 @@ class SearchScreen extends React.Component {
     })
   }
 
-  filteredAnimals = (animals, type) => animals.filter(animal => animal.type === type)
+  filteredAnimals = (animals, type, ageRange) => {
+    return animals
+      .filter(animal => animal.type === type)
+      .filter(animal => animal.age >= ageRange.min && animal.age <= ageRange.max)
+  }
 
   render() {
     const animals = this.props.animals;
-    const { typePreference } = this.props.settings;
-    const selectedAnimals = this.filteredAnimals(animals, typePreference)
+    let { typePreference, ageRange } = this.props.settings;
+    const selectedAnimals = this.filteredAnimals(animals, typePreference, ageRange)
 
     return (
       <View style={styles.content}>
@@ -135,12 +139,6 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     padding: 10,
     fontSize: 28
-  },
-  animated: {
-    height: SCREEN_HEIGHT - 120,
-    width: SCREEN_WIDTH,
-    padding: 10,
-    position: 'absolute',
   },
 });
 

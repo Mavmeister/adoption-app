@@ -11,7 +11,7 @@ import {
 // Sample data for dev
 import data from '../data.json';
 import SavedList from '../components/SavedList';
-import AnimalProfile from '../screens/AnimalProfile.1';
+import AnimalProfile from './AnimalProfile';
 import { connect } from 'react-redux';
 
 class SavedScreen extends React.Component {
