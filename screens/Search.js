@@ -3,15 +3,13 @@ import {
   StyleSheet,
   Text,
   View,
-  Dimensions, 
 } from 'react-native';
 import AnimalProfile from './AnimalProfile'
 import { fetchAnimals, fetchSettings, saveAnimals } from '../actions';
 import { connect } from 'react-redux';
 import CardStack, { Card } from 'react-native-card-stack-swiper';
-
-const SCREEN_HEIGHT = Dimensions.get('window').height;
-const SCREEN_WIDTH = Dimensions.get('window').width;
+import Colors from '../constants/Colors';
+import window from '../constants/Layout';
 
 class SearchScreen extends React.Component {
 
@@ -27,7 +25,7 @@ class SearchScreen extends React.Component {
     // const bothAnimals = {'dogs': dogs, 'cats': cats}
     // const filtered = animals.filter(animal => animal.type === typePreference)
     return animals.map((item, idx) => {
-      return <Card key={idx}><AnimalProfile {...item} /></Card>
+      return <Card key={idx} style={styles.card}><AnimalProfile {...item} /></Card>
     })
   }
 
@@ -44,8 +42,7 @@ class SearchScreen extends React.Component {
 
     return (
       <View style={styles.content}>
-        <CardStack 
-          style={styles.content} 
+        <CardStack
           ref={swiper => { this.swiper = swiper }}
           disableTopSwipe={true}
           disableBottomSwipe={true}
@@ -67,23 +64,15 @@ class SearchScreen extends React.Component {
 const styles = StyleSheet.create({
   content: {
     flex: 1,
-    backgroundColor: '#31BED2'
+  },
+  card: {
   },
   noCards: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     margin: 'auto',
-    height: 100,
-    width: 'auto',
-    backgroundColor: '#FFFF'
-  },
-  image: {
-    flex: 1,
-    height: null,
-    width: null,
-    resizeMode: 'cover',
-    borderRadius: 20
+    height: 500,
+    backgroundColor: Colors.white
   },
   savedView: {
     position: 'absolute',
@@ -93,9 +82,9 @@ const styles = StyleSheet.create({
     transform: [{rotate: '-30deg'}]
   },
   save: {
-    color: 'green',
+    color: Colors.green,
     borderWidth: 1,
-    borderColor: 'green',
+    borderColor: Colors.green,
     fontWeight: '800',
     padding: 10,
     fontSize: 28
@@ -108,9 +97,9 @@ const styles = StyleSheet.create({
     transform: [{rotate: '30deg'}]
   },
   pass: {
-    color: 'red',
+    color: Colors.orange,
     borderWidth: 1,
-    borderColor: 'red',
+    borderColor: Colors.orange,
     fontWeight: '800',
     padding: 10,
     fontSize: 28

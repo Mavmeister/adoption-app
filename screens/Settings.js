@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     padding: 15,
-    backgroundColor: '#BDD9B5',
+    backgroundColor: '#f1ffed',
     justifyContent: 'flex-end'
   },
   header: {
@@ -117,9 +117,13 @@ const styles = StyleSheet.create({
     fontFamily: 'Open-Sans-Bold'
   },
   description: {
-    borderColor: 'black',
+    backgroundColor: '#FFF',
+    borderTopWidth: 1,
+    borderLeftWidth: 1,
+    borderBottomWidth: 2,
+    borderRightWidth: 2,
+    borderColor: 'lightgray',
     borderRadius: 5,
-    borderWidth: 1,
     height: '50%',
     padding: 10,
     marginBottom: 20,
@@ -130,9 +134,13 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 15,
     justifyContent: 'space-between',
-    borderColor: 'black',
+    backgroundColor: '#FFF',
+    borderTopWidth: 1,
+    borderLeftWidth: 1,
+    borderBottomWidth: 2,
+    borderRightWidth: 2,
+    borderColor: 'lightgray',
     borderRadius: 5,
-    borderWidth: 1,
   },
   switch: {
     transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }],

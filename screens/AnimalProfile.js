@@ -5,29 +5,29 @@ import {
   Text,
   View,
   ScrollView,
-  TouchableHighlight,
-  Modal,
   Button
 } from 'react-native';
 import window from '../constants/Layout';
+import Colors from '../constants/Colors';
+
 export default class AnimalProfile extends React.Component {
 
   render() {
-    const { name, img, sex, age, profile, isModal } = this.props;
+    const { name, img, sex, age, profile, isModal, height } = this.props;
     return (
-      <View style={styles.content}>
-        <View style={styles.imageContainer}>
-          <Image style={styles.image} source={{uri: img}} />
-        </View>
-        <View style={styles.header}>
+      <View style={[{
+        height: height ? height : window.window.height - 200,
+        marginTop: isModal ? 80 : 20,
+        marginBottom: isModal ? 80 : 20
+        }, styles.content]}>
+        <Image style={styles.image} source={{uri: img}} />
+        <View style={styles.headerContainer}>
           <Text style={styles.name}>{name}</Text>
           <Text style={styles.age}>{age} years</Text>
           <Text style={styles.sex}>{sex == 'M' ? 'Male' : 'Female'}</Text>
         </View>
         <ScrollView>
-          <View style={{height: 500}}>
             <Text style={styles.profile}>{profile}</Text>
-          </View>
         </ScrollView>
         {isModal && (
           <View style={styles.buttonContainer}>
@@ -47,41 +47,40 @@ export default class AnimalProfile extends React.Component {
 const styles = StyleSheet.create({
   content: {
     flex: 1,
-    padding: 15,
-    height: window.window.height,
-    width: window.window.width,
-    backgroundColor: '#abe0e8',
+    marginLeft: 20,
+    marginRight: 20,
+    padding: 10,
+    borderRightWidth: 2,
+    borderTopWidth: 1,
+    borderLeftWidth: 1,
+    borderBottomWidth: 2,
+    borderColor: Colors.lightgray,
+    borderRadius: 5,
+    backgroundColor: Colors.white
   },
-  header: {
+  headerContainer: {
     flexDirection: 'row', 
     justifyContent: 'space-between', 
     marginBottom: 10, 
     paddingBottom: 10,
+    paddingTop: 10,
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: 'black',
+    borderBottomColor: Colors.lightgray
   },
   buttonContainer: {
-    marginBottom: 30,
-    marginTop: 20,
-    height: 40,
     width: 200,
-    justifyContent: 'center',
-    alignItems: 'center',
+    height: 40,
+    marginTop: 5,
     marginLeft: 'auto',
     marginRight: 'auto',
     borderWidth: 1,
     borderRadius: 5,
   },
-  imageContainer: {
-    alignItems:'center',
-  },
   image: {
-    height: window.window.height / 2,
-    width: window.window.width - 10,
-    borderRadius: 20,
-    marginBottom: 10,
-    marginTop: 10
+    height: window.window.height / 3,
+    width: window.window.width - 60,
+    borderRadius: 5
   },
   name: {
     fontSize: 30,
@@ -99,6 +98,5 @@ const styles = StyleSheet.create({
   profile: {
     lineHeight: 24,
     fontSize: 20,
-    marginBottom: 25
   },
 });

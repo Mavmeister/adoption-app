@@ -7,6 +7,7 @@ import {
 import { connect } from 'react-redux';
 import SavedList from '../components/SavedList';
 import AnimalProfile from './AnimalProfile';
+import Colors from '../constants/Colors';
 
 class SavedScreen extends React.Component {
   state = {
@@ -25,12 +26,13 @@ class SavedScreen extends React.Component {
         <SavedList data={this.props.savedAnimals} onPressItem={(id) => this.setState({animalId: id, modalVisible: true})}/>
         <Modal
           animationType="slide"
-          transparent={false}
+          transparent={true}
           visible={this.state.modalVisible}
         >
-          <AnimalProfile 
+          <AnimalProfile
             isModal={true}
             visible={true}
+            height={100}
             id={this.state.animalId}
             onClose={this.setModalVisible}
             {...singleAnimal}
@@ -44,7 +46,7 @@ class SavedScreen extends React.Component {
 const styles = StyleSheet.create({
   content: {
     flex: 1,
-    backgroundColor: '#ffcd99'
+    backgroundColor: Colors.lightblue
   },
 });
 
