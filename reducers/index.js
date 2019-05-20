@@ -8,9 +8,10 @@ import {
   SETTINGS_OK
 } from '../actions'
 
-const initialState = {
+export const initialState = {
   animals: [],
   savedAnimals: [],
+  loading: false,
   settings: {
     id: 1001,
     profile: "",
