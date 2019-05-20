@@ -6,7 +6,6 @@ import {
   View,
   Switch,
   Keyboard,
-  ScrollView,
   TouchableWithoutFeedback,
   KeyboardAvoidingView
 } from 'react-native';
@@ -20,11 +19,9 @@ class SettingsScreen extends React.Component {
       ageRange: {
         min: "1",
         max: "10"
-      },
-      isCat: false,
-      profile: 'I love all animals! I live in a nice big house on an acre of land, the pets will have plenty of room to run around and have fun. I work from home too so I will always be available to them. I grew up on a farm and have a great deal of experience working with animals.'
-    }
+      }
   }
+}
 
   componentWillMount() {
     this.props.fetchSettings()
@@ -48,9 +45,8 @@ class SettingsScreen extends React.Component {
     }
 
     return (
-      
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={styles.content}>
+        <KeyboardAvoidingView style={styles.content} behavior="padding">
           <Text style={styles.header}>Adopter Profile</Text>
           <View style={styles.description}>
             <TextInput 
@@ -64,23 +60,21 @@ class SettingsScreen extends React.Component {
               />
           </View>
           <Text style={styles.header}>Preferences</Text>
-          <Text>Min:{this.state.ageRange.min}</Text>
-          <Text>Max:{this.state.ageRange.max}</Text>
           <View style={styles.preferences}>
             <View style={styles.animal}>
-              <Text style={{fontSize: 20}}>Animal:</Text>
-              <Text style={{fontSize: 20}}>Cat</Text>
+              <Text style={{fontSize: 24}}>Animal:</Text>
+              <Text style={{fontSize: 22, lineHeight: 32, marginLeft: 40}}>Cat</Text>
               <Switch
-                trackColor={{false: 'red', true: 'blue'}}
-                ios_backgroundColor={'red'}
+                trackColor={{false: '#FA932B', true: '#2DC0CF'}}
+                ios_backgroundColor={'#FA932B'}
                 onValueChange={changeAnimal}
                 value={typePreference == 'cat' ? false : true}
-                style={{transform: [{ scaleX: 2 }, { scaleY: 1.5 }]}}
+                style={styles.switch}
               />
-              <Text style={{fontSize: 20}}>Dog</Text>
+              <Text style={{fontSize: 22, lineHeight: 32, marginRight: 20}}>Dog</Text>
             </View>
             <View style={styles.age}>
-              <Text style={{fontSize: 20, marginRight: 50}}>Age:</Text>
+              <Text style={{fontSize: 24, marginRight: 50}}>Age:</Text>
               <TextInput
                 textAlign={'center'}
                 returnKeyType="done"
@@ -104,7 +98,7 @@ class SettingsScreen extends React.Component {
               />
             </View>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     );
   }
@@ -115,14 +109,15 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 15,
     backgroundColor: '#BDD9B5',
+    justifyContent: 'flex-end'
   },
   header: {
     fontSize: 24,
     marginBottom: 5,
-    fontFamily: 'Open-Sans-Regular'
+    fontFamily: 'Open-Sans-Bold'
   },
   description: {
-    borderColor: 'lightgray',
+    borderColor: 'black',
     borderRadius: 5,
     borderWidth: 1,
     height: '50%',
@@ -132,29 +127,39 @@ const styles = StyleSheet.create({
   },
   preferences: {
     flex: 1,
+    padding: 10,
+    marginBottom: 15,
+    justifyContent: 'space-between',
+    borderColor: 'black',
+    borderRadius: 5,
+    borderWidth: 1,
+  },
+  switch: {
+    transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }],
   },
   animal: {
     flex: 1,
     flexDirection: 'row',
+    marginTop: 20,
     justifyContent: 'space-between',
-    alignItems: 'center',
     fontFamily: 'Open-Sans-Light'
-
   },
   age: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    fontFamily: 'Open-Sans-Light'
-
+    fontFamily: 'Open-Sans-Light',
+    marginBottom: 20
   },
   field: {
-    width: 100,
-    height: 50,
-    lineHeight: 24,
+    width: 70,
+    height: 40,
+    lineHeight: 28,
     fontSize: 24,
     borderWidth: 1,
     borderColor: 'gray',
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 10,
   },
 });

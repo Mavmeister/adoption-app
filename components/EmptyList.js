@@ -6,7 +6,7 @@ export default class EmptyList extends React.Component {
   render() {
     return (
         <View style={{flex: 1, alignItems: 'center'}}>
-          <Text style={styles.header}>No Saved Pets Available</Text>
+          <Text style={styles.header}>No Saved Pets</Text>
           <Text style={styles.empty}>Save your favorite pets by swiping right in the Search tab</Text>
         </View>
     );

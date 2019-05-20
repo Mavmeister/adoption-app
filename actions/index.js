@@ -36,6 +36,7 @@ const fetchAnimals = (args = {}) => (dispatch) => {
     return fetch(URLs.animals)
       .then(res => res.json())
       .then(json => {
+        const cats = 
         dispatch(animalsOk(json))
       })
 }
@@ -53,12 +54,10 @@ const fetchSettings = (args = {}) => (dispatch) => {
 }
 
 const updateSettings = (args = {}) => (dispatch, getState) => {
-  console.log(args)
   const state = getState();
   const newSettings = {...state.data.settings, ...args}
   dispatch(settingsUpdate(newSettings));
 }
-
 
 export {
   fetchAnimals,

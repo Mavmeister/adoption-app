@@ -1,15 +1,9 @@
 import React from 'react';
 import {
-  Image,
-  Platform,
-  ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
   Dimensions, 
-  Animated, 
-  PanResponder
 } from 'react-native';
 import AnimalProfile from './AnimalProfile'
 import { fetchAnimals, fetchSettings, saveAnimals } from '../actions';
@@ -20,25 +14,6 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 class SearchScreen extends React.Component {
-  constructor() {
-    super()
-    this.position = new Animated.ValueXY()
-    this.state = {
-      currentIndex: 0
-    }
-
-    this.saveOpacity = this.position.x.interpolate({
-      inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
-      outputRange: [0, 0, 1],
-      extrapolate: 'clamp'
-    })
-
-    this.passOpacity = this.position.x.interpolate({
-      inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
-      outputRange: [1, 0, 0],
-      extrapolate: 'clamp'
-    })
-  }
 
   componentWillMount() {
     this.props.fetchAnimals()

@@ -3,7 +3,8 @@ import { StyleSheet, View } from 'react-native';
 import { AppLoading, Font, } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 import { store } from './store';
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
+import Layout from './constants/Layout';
 
 export default class App extends React.Component {
   state = {

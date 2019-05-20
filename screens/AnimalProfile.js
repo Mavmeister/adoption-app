@@ -19,8 +19,10 @@ export default class AnimalProfile extends React.Component {
         <View style={styles.imageContainer}>
           <Image style={styles.image} source={{uri: img}} />
         </View>
-        <View >
-          <Text style={styles.text}>{name}, {age}yr, {sex}</Text>
+        <View style={styles.header}>
+          <Text style={styles.name}>{name}</Text>
+          <Text style={styles.age}>{age} years</Text>
+          <Text style={styles.sex}>{sex == 'M' ? 'Male' : 'Female'}</Text>
         </View>
         <ScrollView>
           <View style={{height: 500}}>
@@ -45,16 +47,27 @@ export default class AnimalProfile extends React.Component {
 const styles = StyleSheet.create({
   content: {
     flex: 1,
-    padding: 10,
-    height: window.window.height + 100,
+    padding: 15,
+    height: window.window.height,
     width: window.window.width,
     backgroundColor: '#abe0e8',
   },
+  header: {
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    marginBottom: 10, 
+    paddingBottom: 10,
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: 'black',
+  },
   buttonContainer: {
-    marginBottom: 80,
+    marginBottom: 30,
+    marginTop: 20,
     height: 40,
     width: 200,
     justifyContent: 'center',
+    alignItems: 'center',
     marginLeft: 'auto',
     marginRight: 'auto',
     borderWidth: 1,
@@ -66,15 +79,22 @@ const styles = StyleSheet.create({
   image: {
     height: window.window.height / 2,
     width: window.window.width - 10,
-    // resizeMode: 'contain',
     borderRadius: 20,
     marginBottom: 10,
+    marginTop: 10
   },
-  text: {
+  name: {
     fontSize: 30,
     lineHeight: 30,
-    marginTop: 0,
-    marginBottom: 5,
+    fontWeight: 'bold'
+  },
+  age: {
+    fontSize: 26,
+    lineHeight: 30,
+  },
+  sex: {
+    fontSize: 22,
+    lineHeight: 30,
   },
   profile: {
     lineHeight: 24,

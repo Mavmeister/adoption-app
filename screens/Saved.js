@@ -1,18 +1,12 @@
 import React from 'react';
 import {
-  Image,
-  Platform,
-  ScrollView,
   StyleSheet,
   View,
   Modal
 } from 'react-native';
-
-// Sample data for dev
-import data from '../data.json';
+import { connect } from 'react-redux';
 import SavedList from '../components/SavedList';
 import AnimalProfile from './AnimalProfile';
-import { connect } from 'react-redux';
 
 class SavedScreen extends React.Component {
   state = {
@@ -54,12 +48,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = {
-
-};
-
 const mapStateToProps = (state) => ({
   savedAnimals: state.data.savedAnimals,
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(SavedScreen)
+export default connect(mapStateToProps, null)(SavedScreen)
