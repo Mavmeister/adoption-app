@@ -21,6 +21,7 @@ export default class SavedList extends React.Component {
   )
   
   render() {
+    // Renders a FlatList for improved mobile performance
     return (
       <FlatList
         data={this.props.data}

@@ -25,7 +25,7 @@ class SavedScreen extends React.Component {
       <View style={styles.content}>
         <SavedList data={this.props.savedAnimals} onPressItem={(id) => this.setState({animalId: id, modalVisible: true})}/>
         <Modal
-          animationType="slide"
+          animationType="fade"
           transparent={true}
           visible={this.state.modalVisible}
         >

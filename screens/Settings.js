@@ -30,6 +30,7 @@ class SettingsScreen extends React.Component {
   render() {
     const { profile, typePreference } = this.props.settings;
 
+    // Methods to modify settings for the user's profile
     changeAnimal = (isDog) => {
       const typePreference = isDog === false ? 'cat' : 'dog';
       this.props.updateSettings({typePreference})

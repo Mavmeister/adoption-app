@@ -9,7 +9,6 @@ import { fetchAnimals, fetchSettings, saveAnimals } from '../actions';
 import { connect } from 'react-redux';
 import CardStack, { Card } from 'react-native-card-stack-swiper';
 import Colors from '../constants/Colors';
-import window from '../constants/Layout';
 
 class SearchScreen extends React.Component {
 
@@ -20,15 +19,12 @@ class SearchScreen extends React.Component {
   
   renderAnimals = (animals) => {
     // TODO: FIX ISSUE WITH DISAPPEARING ANIMALS
-    // const dogs = animals.filter(animal => animal.type === 'dog')
-    // const cats = animals.filter(animal => animal.type === 'cat')
-    // const bothAnimals = {'dogs': dogs, 'cats': cats}
-    // const filtered = animals.filter(animal => animal.type === typePreference)
     return animals.map((item, idx) => {
       return <Card key={idx} style={styles.card}><AnimalProfile {...item} /></Card>
     })
   }
-
+  
+  // Filters animals based on Type and Age
   filteredAnimals = (animals, type, ageRange) => {
     return animals
       .filter(animal => animal.type === type)

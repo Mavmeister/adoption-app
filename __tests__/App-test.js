@@ -34,17 +34,3 @@ test('Returns initial state', () => {
     }
   })
 });
-
-// describe('Actions', () => {
-//   it('Should fetch animals', () => {
-//     const expectedAction = {
-//       type: actions.ANIMALS_REQUEST
-//     };
-//     expect(actions.fetchAnimals()).toEqual(expectedAction)
-//   })
-// })
-// describe('Reducers', () => {
-//   it('Should return the initial state', () => {
-//     expect(rootReducer(undefined, {}).toEqual({}))
-//   })
-// })
